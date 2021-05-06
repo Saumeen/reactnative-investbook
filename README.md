@@ -1,3 +1,4 @@
 # reactnative-investbook
 
-Application for managing credit debit entries.
+Application for managing Income and Invest entries.
+
