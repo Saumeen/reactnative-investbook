@@ -12,14 +12,14 @@ import Piechart from '../Common/Piechart'
 const Home = ({ total, credit, debit, data, actions }) => {
 
     const pieChartData = [
-        { name: 'Credit', population: credit, color: GLOBAL.COLOR.CREDIT, legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'debit', population: debit, color: GLOBAL.COLOR.DEBIT, legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Income', population: credit, color: GLOBAL.COLOR.INCOME, legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'Invest', population: debit, color: GLOBAL.COLOR.INVEST, legendFontColor: '#7F7F7F', legendFontSize: 15 },
     ]
 
     const typeData = [
-        { name: 'STOCK', population: data.stock, color: GLOBAL.COLOR.CREDIT, legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'MUTUALFUND', population: data.mf, color: GLOBAL.COLOR.DEBIT, legendFontColor: '#7F7F7F', legendFontSize: 15 },
-        { name: 'OTHER', population: data.other, color: GLOBAL.COLOR.DEBIT, legendFontColor: '#7F7F7F', legendFontSize: 15 }
+        { name: 'STOCK', population: data.stock, color: GLOBAL.COLOR.INCOME, legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'MUTUALFUND', population: data.mf, color: GLOBAL.COLOR.INVEST, legendFontColor: '#7F7F7F', legendFontSize: 15 },
+        { name: 'OTHER', population: data.other, color: GLOBAL.COLOR.INCOME_CARD, legendFontColor: '#7F7F7F', legendFontSize: 15 }
 
     ]
 
@@ -31,11 +31,11 @@ const Home = ({ total, credit, debit, data, actions }) => {
             <View style={styles.cardWrapper}>
 
                 <View style={styles.cwView}>
-                    <Text style={styles.text}>Credit Amount </Text>
+                    <Text style={styles.text}>Income Amount </Text>
                     <Text style={styles.val}> {credit == null ? 0 : credit} </Text>
                 </View>
                 <View style={styles.cwView}>
-                    <Text style={styles.text}>Debit Amount </Text>
+                    <Text style={styles.text}>Invest Amount </Text>
                     <Text style={styles.val}> {debit == null ? 0 : debit} </Text>
                 </View>
                 <View style={styles.cwView}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     cardWrapper: {
         flex: 1,
-        backgroundColor: GLOBAL.COLOR.CREDIT,
+        backgroundColor: GLOBAL.COLOR.INVEST_CARD,
         margin: 20,
         borderRadius: 15,
         flexDirection: 'row'

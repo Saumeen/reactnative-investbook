@@ -8,14 +8,15 @@ import { Entypo } from '@expo/vector-icons';
 import uuid from 'react-native-uuid'
 
 
-import { GLOBAL, TYPE } from '../../Constant/GlobalConstant'
+import { GLOBAL, INCOME_TYPE, INVEST_TYPE } from '../../Constant/GlobalConstant'
 const ModalBox = (props) => {
 
 
     const [amount, setAmount] = useState(0)
     const [desc, setDesc] = useState('')
     const [error, seterror] = useState('')
-    const [selectedType, setSelectedType] = useState(TYPE[0])
+    const [selectedIncomeType, setSelectedIncomeType] = useState(INCOME_TYPE[0])
+    const [selectedInvestType, setSelectedInvestType] = useState(INVEST_TYPE[0])
 
     const data = (event) => {
         var isValid = false
@@ -32,6 +33,13 @@ const ModalBox = (props) => {
             seterror('');
         }
         const today = new Date().toLocaleDateString("en-IN");
+        var selectedType;
+        if (props.header == 'Income') {
+            selectedType = selectedIncomeType;
+        }
+        else {
+            selectedType = selectedInvestType
+        }
         const obj = {
             id: uuid.v4(),
             amount: amount,
@@ -56,7 +64,7 @@ const ModalBox = (props) => {
             >
                 <View style={styles.container}>
                     <View style={styles.modalheader}>
-                        <Text style={styles.header}>{props.header} - {props.total}</Text>
+                        <Text style={styles.header}>{props.header}</Text>
                         <Pressable onPress={props.backdrop}>
                             <Entypo name="cross" size={24} color="black" />
                         </Pressable>
@@ -73,22 +81,44 @@ const ModalBox = (props) => {
 
                         <View style={styles.inputcover}>
                             <Text>Select Type</Text>
-                            <Picker
-                                nativeID={uuid.v4()}
-                                selectedValue={selectedType}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    setSelectedType(itemValue)
-                                }
+                            {props.header == 'Income' ?
+                                <Picker
+                                    nativeID={uuid.v4()}
+                                    selectedValue={selectedIncomeType}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        setSelectedIncomeType(itemValue)
+                                    }
+                                >{INCOME_TYPE.map((val) => {
+                                    return (<Picker.Item
 
-                            >{TYPE.map((val) => {
-                                return (<Picker.Item
+                                        key={uuid.v4()}
+                                        label={val}
+                                        value={val} />)
+                                })}
+                                </Picker> : <Picker
+                                    nativeID={uuid.v4()}
+                                    selectedValue={selectedInvestType}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        setSelectedInvestType(itemValue)
+                                    }
+                                >{INVEST_TYPE.map((val) => {
+                                    return (<Picker.Item
 
-                                    key={uuid.v4()}
-                                    label={val}
-                                    value={val} />)
-                            })}
-                            </Picker>
+                                        key={uuid.v4()}
+                                        label={val}
+                                        value={val} />)
+                                })}
+                                </Picker>}
                         </View>
+                        {props.header == 'Invest' ?
+                            <View style={styles.inputcover}>
+                                <Text>Enter type quntity</Text>
+                                <TextInput
+                                    style={styles.inputbox}
+                                    keyboardType={'number-pad'}
+                                    onChangeText={(data) => setDesc(data)}></TextInput>
+                            </View>
+                            : <View></View>}
 
                         <View style={styles.inputcover}>
                             <Text>Enter description</Text>
@@ -97,6 +127,7 @@ const ModalBox = (props) => {
                                 keyboardType={'default'}
                                 onChangeText={(data) => setDesc(data)}></TextInput>
                         </View>
+
 
 
                         <Pressable onPress={(event) => props.submit(data(event))} style={styles.buttoncover}>
@@ -126,7 +157,7 @@ const styles = StyleSheet.create({
         marginTop: '50%'
     },
     modal: {
-        maxHeight: 500,
+        maxHeight: 600,
     },
     modalheader: {
         flex: 1,
@@ -138,7 +169,7 @@ const styles = StyleSheet.create({
         backgroundColor: GLOBAL.COLOR.INACTIVE_TAB_COLOR
     },
     modalBody: {
-        flex: 5,
+        flex: 8,
         alignItems: 'flex-end',
     },
     header: {
@@ -150,11 +181,12 @@ const styles = StyleSheet.create({
         height: 30
     },
     inputcover: {
-        flex: 1,
+        flex: 2,
         width: '100%',
         marginVertical: 8,
         alignContent: 'center',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        paddingVertical: 5
     },
     buttoncover: {
         flex: 1,

@@ -7,15 +7,15 @@ export default (props) => {
 
     const renderItem = ({ item, index }) => {
         var color;
-        var removable = false;
-        if (props.data.length - 1 == index) {
-            removable = true
-        }
-        if (item.paymentType == 'Credit') {
-            color = GLOBAL.COLOR.CREDIT
+        var removable = true;
+        // if (props.data.length - 1 == index) {
+        //   removable = true
+        //}
+        if (item.paymentType == 'Income') {
+            color = GLOBAL.COLOR.INCOME_CARD
         }
         else {
-            color = GLOBAL.COLOR.DEBIT
+            color = GLOBAL.COLOR.INVEST_CARD
         }
 
         return (<Card id={item.id}

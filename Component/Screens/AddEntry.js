@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import * as SQLite from 'expo-sqlite';
-
 
 import * as Actions from '../../Actions/Action'
 import { GLOBAL } from '../../Constant/GlobalConstant'
@@ -47,15 +45,51 @@ class Add extends Component {
     }
 
     clearCache() {
+
         let { actions } = this.props
-        actions.removeCache();
-        this.update()
+        Alert.alert(
+
+            "Are you sure?",
+            "Once deleted data can not be recover",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Yes", onPress: () => {
+                        actions.removeCache();
+                        this.update();
+                    }
+                }
+            ]
+
+        );
+
     }
 
     deleteItem(id) {
         let { actions } = this.props
-        actions.deleteById(id)
-        this.update()
+        Alert.alert(
+
+            "Are you sure?",
+            "Once deleted data can not be recover",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                {
+                    text: "Yes", onPress: () => {
+                        actions.deleteById(id)
+                        this.update();
+                    }
+                }
+            ]
+
+        );
     }
 
     update() {
@@ -71,7 +105,7 @@ class Add extends Component {
 
 
                 <Modal
-                    header="Credit"
+                    header="Income"
                     visible={this.props.creditVisible}
                     submit={this.creditSubmit.bind(this)}
                     backdrop={this.toggleCreditVisible.bind(this)}
@@ -79,7 +113,7 @@ class Add extends Component {
                 ></Modal>
 
                 <Modal
-                    header="Debit"
+                    header="Invest"
                     visible={this.props.debitVisible}
                     submit={this.debitSubmit.bind(this)}
                     backdrop={this.toggleDebitVisible.bind(this)}
@@ -97,7 +131,7 @@ class Add extends Component {
                                 name="cash-plus"
                                 size={30}
                                 color="black" />
-                                Credit
+                                Income
                         </Text>
                     </Pressable>
 
@@ -107,7 +141,7 @@ class Add extends Component {
                                 name="cash-remove"
                                 size={30} color="black"
                             />
-                            Debit
+                            Invest
                         </Text>
                     </Pressable>
 
@@ -122,13 +156,6 @@ class Add extends Component {
                 </View>
                 <View style={styles.listbody}>
                     <CardList data={this.props.list} refreshing={this.props.isLoading} refresh={this.update.bind(this)} remove={this.deleteItem.bind(this)}></CardList>
-                    {/* <Text style={styles.text}>{this.props.total}
-                        <Image
-                            style={styles.img}
-                            source={require('../../assets/rupee-indian.png')}>
-                        </Image>
-                    {this.props.total == 0 ? <Text>Please add amount</Text> : <Text></Text>}
-                    </Text> */}
 
                 </View>
 
@@ -176,12 +203,12 @@ const styles = StyleSheet.create({
 
     },
     btnTextIn: {
-        backgroundColor: GLOBAL.COLOR.CREDIT,
+        backgroundColor: GLOBAL.COLOR.INCOME,
         paddingHorizontal: 33,
         paddingVertical: 20
     },
     btnTextOut: {
-        backgroundColor: GLOBAL.COLOR.DEBIT,
+        backgroundColor: GLOBAL.COLOR.INVEST,
         paddingHorizontal: 33,
         paddingVertical: 20
 

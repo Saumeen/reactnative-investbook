@@ -24,8 +24,8 @@ export const getDataByType = async () => {
 }
 
 export const getTotalAmount = async () => {
-    let creditAmount = await ExecuteQuery('SELECT sum(amount) as credit FROM invest where paymentType=?', ['Credit']).catch((e) => { console.error(e) });
-    let debitAmount = await ExecuteQuery('SELECT sum(amount) as debit FROM invest where paymentType=?', ['Debit']).catch((e) => { console.error(e) });
+    let creditAmount = await ExecuteQuery('SELECT sum(amount) as credit FROM invest where paymentType=?', ['Income']).catch((e) => { console.error(e) });
+    let debitAmount = await ExecuteQuery('SELECT sum(amount) as debit FROM invest where paymentType=?', ['Invest']).catch((e) => { console.error(e) });
     const data = { 'credit': creditAmount, 'debit': debitAmount }
     return data;
 }
